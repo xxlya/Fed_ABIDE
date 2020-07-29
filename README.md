@@ -6,6 +6,13 @@ Our manuscript is available on arxiv https://arxiv.org/pdf/2001.05647.pdf and wi
 - Pytorch 1.1.0
 - tensorboardX
 
-## How to run ?
+## Data
+### Data Download
+[ ] TBD
+### Data Preprocessing
+[ ] TBD
+
+
+
 
 
