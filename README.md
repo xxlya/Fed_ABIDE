@@ -22,6 +22,11 @@ python ensemble.py --split ${SPLIT} --site ${SITE}
 python cross.py --trainsite ${TRAINSITE}
 ### MIX
 python mix.py --split ${SPLIT}
+### Vanilla
+#### vary on noise
+python federated.py --split ${SPLIT} --noise ${NOISE} --type ${TYPE}
+#### vary on pace
+python federated.py --split ${SPLIT} --pace ${PACE}
 
 
 
