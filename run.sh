@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd preprocess
 sh download_abide_dataset.sh
 sh remove.sh
 python truncation.py
