@@ -1,9 +1,9 @@
 #!/bin/bash
 
-sh download_abide_dataset.sh
-sh remove.sh
-python truncation.py
-python create_vector.py
+sh ./preprocess/download_abide_dataset.sh
+sh ./preprocess/remove.sh
+python ./preprocess/truncation.py
+python ./preprocess/create_vector.py
 
 
 #python create_remove.py > remove.sh                  # Create remove.sh
