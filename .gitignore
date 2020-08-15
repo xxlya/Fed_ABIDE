@@ -1,0 +1,10 @@
+__pycache__/
+Outputs/
+NYU/
+UCLA_1/
+UM_1/
+USM/
+.idea/
+.DS_Store
+*.h5
+Phenotypic_V1_0b_preprocessed1.csv
