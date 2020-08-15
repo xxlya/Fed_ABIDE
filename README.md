@@ -5,12 +5,15 @@ Our manuscript is available on arxiv https://arxiv.org/pdf/2001.05647.pdf and wi
 - Python 3.6
 - Pytorch 1.1.0
 - tensorboardX
+- nilearn
+- deepdish
+- numpy
 
 ## Data
-### Data Download
-[ ] TBD
-### Data Preprocessing
-[ ] TBD
+### Data Download & Preprocessing
+```shell
+sh run.sh
+```
 
 ## How to run ?
 Here we show a few examples using different strategies listed in the paper. Please check the meaning of configurations in each script.

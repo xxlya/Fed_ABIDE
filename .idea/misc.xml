@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JavaScriptSettings">
-    <option name="languageLevel" value="ES6" />
-  </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Remote Python 3.7.7 (sftp://ubuntu@ec2-52-15-158-47.us-east-2.compute.amazonaws.com:22/home/ubuntu/anaconda3/envs/pysyft/bin/python)" project-jdk-type="Python SDK" />
-</project>
