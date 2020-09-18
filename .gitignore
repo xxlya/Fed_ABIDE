@@ -1,4 +1,5 @@
 __pycache__/
+<<<<<<< HEAD
 Outputs/
 NYU/
 UCLA_1/
@@ -8,3 +9,14 @@ USM/
 .DS_Store
 *.h5
 Phenotypic_V1_0b_preprocessed1.csv
+=======
+preprocess/Outputs/
+preprocess/NYU/
+preprocess/UCLA_1/
+preprocess/UM_1/
+preprocess/USM/
+.idea/
+.DS_Store
+preprocess/*.h5
+preprocess/Phenotypic_V1_0b_preprocessed1.csv
+>>>>>>> 720ce4e0a4fca75dc23a918c3b6a1633e002a865
