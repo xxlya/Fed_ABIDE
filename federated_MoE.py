@@ -249,23 +249,24 @@ def main(args):
                 optimizers[i].step()
             count += 1
 
-            if count%pace == 0 or i == args.nsteps-1:
-                for key in model.classifier.state_dict().keys():
-                    if models[0].classifier.state_dict()[key].dtype == torch.int64:
-                        model.classifier.state_dict()[key].data.copy_(models[0].classifier.state_dict()[key])
-                    else:
-                        temp = torch.zeros_like(model.classifier.state_dict()[key])
-                        # add noise
-                        for s in range(4):
-                            nn = tdist.Normal(torch.tensor([0.0]), args.noise*torch.std(models[s].classifier.state_dict()[key].detach().cpu()))
-                            noise = nn.sample(models[i].classifier.state_dict()[key].size()).squeeze()
-                            noise = noise.to(device)
-                            temp += w[s] * (models[s].classifier.state_dict()[key] + noise)
-                        #updata global model
-                        model.classifier.state_dict()[key].data.copy_(temp)
-                        # only classifier get updated
-                        for s in range(4):
-                            models[s].classifier.state_dict()[key].data.copy_(model.classifier.state_dict()[key])
+            if count%pace == 0 or t == args.nsteps-1:
+                with torch.no_grad():
+                    for key in model.classifier.state_dict().keys():
+                        if models[0].classifier.state_dict()[key].dtype == torch.int64:
+                            model.classifier.state_dict()[key].data.copy_(models[0].classifier.state_dict()[key])
+                        else:
+                            temp = torch.zeros_like(model.classifier.state_dict()[key])
+                            # add noise
+                            for s in range(4):
+                                nn = tdist.Normal(torch.tensor([0.0]), args.noise*torch.std(models[s].classifier.state_dict()[key].detach().cpu()))
+                                noise = nn.sample(models[i].classifier.state_dict()[key].size()).squeeze()
+                                noise = noise.to(device)
+                                temp += w[s] * (models[s].classifier.state_dict()[key] + noise)
+                            #updata global model
+                            model.classifier.state_dict()[key].data.copy_(temp)
+                            # only classifier get updated
+                            for s in range(4):
+                                models[s].classifier.state_dict()[key].data.copy_(model.classifier.state_dict()[key])
 
         return loss_all[0] / num_data[0], loss_all[1] / num_data[1],loss_all[2] / num_data[2],loss_all[3] / num_data[3], \
                loss_lc[0] / num_data[0],loss_lc[1] / num_data[1], loss_lc[2] / num_data[2], loss_lc[3] / num_data[3]

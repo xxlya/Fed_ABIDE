@@ -230,26 +230,27 @@ def main(args):
                 loss_all[i] += loss.item() * b.size(0)
                 optimizers[i].step()
             count += 1
-            if count%pace ==0 or i == args.nsteps-1 :
-                for key in model.state_dict().keys():
-                    if models[0].state_dict()[key].dtype == torch.int64:
-                        model.state_dict()[key].data.copy_(models[0].state_dict()[key])
-                    else:
-                        temp = torch.zeros_like(model.state_dict()[key])
-                        # add noise
-                        for s in range(4):
-                            if args.type == 'G':
-                                nn = tdist.Normal(torch.tensor([0.0]), args.noise*torch.std(models[s].state_dict()[key].detach().cpu()))
-                            else:
-                                nn = tdist.Laplace(torch.tensor([0.0]), args.noise*torch.std(models[s].state_dict()[key].detach().cpu()))
-                            noise = nn.sample(models[s].state_dict()[key].size()).squeeze()
-                            noise = noise.to(device)
-                            temp += w[s]*(models[s].state_dict()[key]+noise)
-                        # update global model
-                        model.state_dict()[key].data.copy_(temp)
-                        # updata local model
-                        for s in range(4):
-                            models[s].state_dict()[key].data.copy_(model.state_dict()[key])
+            if count%pace ==0 or t == args.nsteps-1 :
+                with torch.no_grad():
+                    for key in model.state_dict().keys():
+                        if models[0].state_dict()[key].dtype == torch.int64:
+                            model.state_dict()[key].data.copy_(models[0].state_dict()[key])
+                        else:
+                            temp = torch.zeros_like(model.state_dict()[key])
+                            # add noise
+                            for s in range(4):
+                                if args.type == 'G':
+                                    nn = tdist.Normal(torch.tensor([0.0]), args.noise*torch.std(models[s].state_dict()[key].detach().cpu()))
+                                else:
+                                    nn = tdist.Laplace(torch.tensor([0.0]), args.noise*torch.std(models[s].state_dict()[key].detach().cpu()))
+                                noise = nn.sample(models[s].state_dict()[key].size()).squeeze()
+                                noise = noise.to(device)
+                                temp += w[s]*(models[s].state_dict()[key]+noise)
+                            # update global model
+                            model.state_dict()[key].data.copy_(temp)
+                            # updata local model
+                            for s in range(4):
+                                models[s].state_dict()[key].data.copy_(model.state_dict()[key])
 
         return loss_all[0] / num_data[0], loss_all[1] / num_data[1], \
                loss_all[2] / num_data[2], loss_all[3] / num_data[3]
