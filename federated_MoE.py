@@ -153,6 +153,7 @@ def main(args):
     train4 = TensorDataset(x4_train, y4_train)
     train_loader4 = DataLoader(train4, batch_size=len(train4)//args.nsteps, shuffle=True)
     train_loaders = [train_loader1, train_loader2, train_loader3, train_loader4]
+    data_inters = [iter(train_loader1),iter(train_loader2),iter(train_loader3),iter(train_loader4)]
 
     test1 = TensorDataset(x1_test, y1_test)
     test2 = TensorDataset(x2_test, y2_test)
@@ -232,7 +233,7 @@ def main(args):
         for t in range(args.nsteps):
             for i in range(4):
                 optimizers[i].zero_grad()
-                a, b= next(iter(train_loaders[i]))
+                a, b= next(data_iters[i])
                 num_data[i] += b.size(0)
                 a = a.to(device)
                 b = b.to(device)
