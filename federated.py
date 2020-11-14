@@ -187,6 +187,7 @@ def main(args):
     models = [model1, model2, model3, model4]
     train_loaders = [train_loader1, train_loader2, train_loader3, train_loader4]
     optimizers = [optimizer1, optimizer2, optimizer3, optimizer4]
+    data_inters = [iter(train_loader1),iter(train_loader2),iter(train_loader3),iter(train_loader4)]
 
 
     model = MLP(6105,args.dim,2).to(device)
@@ -220,7 +221,7 @@ def main(args):
         for t in range(args.nsteps):
             for i in range(4):
                 optimizers[i].zero_grad()
-                a, b= next(iter(train_loaders[i]))
+                a, b= next(data_inters[i])
                 num_data[i] += b.size(0)
                 a = a.to(device)
                 b = b.to(device)
